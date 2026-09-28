@@ -1,0 +1,76 @@
+table _measures
+	lineageTag: 4a7b825a-fc4c-447e-bb56-dfee272148e4
+
+	measure 'Total Visits' = SUM(daily_operations[total_visits])
+		formatString: 0
+		lineageTag: f223f662-3537-4269-a233-ea705241f748
+
+	measure 'Total Readmission' = SUM(daily_operations[readmissions])
+		formatString: 0
+		lineageTag: 471c2b84-3eb6-490c-8a62-d57697d30588
+
+	measure 'Readmission %' = DIVIDE([Total Readmission],[Total Visits],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: bf658541-9381-47cf-83bb-b59416f98647
+
+	measure 'Avg Length of stay' = AVERAGE(daily_operations[avg_los])
+		formatString: 0.00
+		lineageTag: 05d24f12-2378-4d77-a61d-8fd4a8390d8b
+
+	measure 'Total Beds Used' = SUM(daily_operations[beds_used])
+		formatString: 0
+		lineageTag: 09973b24-c6c5-4613-9717-1a2d2d00e5c2
+
+	measure 'Total ICU used' = SUM(daily_operations[icu_used])
+		formatString: 0
+		lineageTag: 8e314320-7554-4228-bbd2-86b197c04808
+
+	measure 'Total Oxygen used' = SUM(daily_operations[oxygen_used])
+		formatString: 0
+		lineageTag: 400719db-80ca-4e31-aa6d-9f582bd4f5c5
+
+	measure 'Total YTD' = TOTALYTD([Total Visits],'Date'[Date])
+		formatString: 0
+		lineageTag: 062e55be-f1f6-497d-a2e5-ef0c76552143
+
+	measure 'Last Year Visits' = CALCULATE([Total Visits],SAMEPERIODLASTYEAR('Date'[Date]))
+		formatString: 0
+		lineageTag: 3cfaf081-f07f-4a51-b672-100f76300e81
+
+	measure 'Visits YoY%' =
+			
+			VAR cyv=[Total Visits]
+			VAR lyv=[Last Year Visits]
+			RETURN
+			DIVIDE(cyv-lyv,cyv,0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: db5448a6-7cf3-4c27-abba-0442e36d666a
+
+	measure 'Visits MoM %' =
+			
+			VAR Curent = [Total Visits]
+			VAR Prior = CALCULATE([Total Visits], DATEADD('Date'[date], -1, MONTH))
+			RETURN DIVIDE(Curent - Prior, Prior, 0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 764d8f5f-9f57-4070-8553-8bba30673efe
+
+	measure 'Total Patient' = SUM(disease_summary[patient_count])
+		formatString: 0
+		lineageTag: 2b080eab-a8ce-4b57-ab29-281d934d671c
+
+	measure 'seasonal visits' = SUM(seasonal_load[visits])
+		formatString: 0
+		lineageTag: f9b19102-8f22-49db-9411-688444064570
+
+	partition _measures = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+

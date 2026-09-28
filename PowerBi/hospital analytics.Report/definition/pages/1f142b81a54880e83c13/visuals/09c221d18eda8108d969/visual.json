@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "09c221d18eda8108d969",
+  "position": {
+    "x": 10.769230769230768,
+    "y": 0,
+    "z": 0,
+    "height": 98.461538461538453,
+    "width": 733.84615384615381,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Hospital Operations Dashboard",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif",
+                      "fontSize": "36pt",
+                      "color": "#0f1115"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "ef519c705517ba629990",
+  "position": {
+    "x": 496.92307692307691,
+    "y": 249.23076923076923,
+    "z": 3,
+    "height": 420,
+    "width": 421.53846153846155,
+    "tabOrder": 3
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "disease_summary"
+                    }
+                  },
+                  "Property": "diagnosis"
+                }
+              },
+              "queryRef": "disease_summary.diagnosis",
+              "nativeQueryRef": "diagnosis",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "Total Patient"
+                }
+              },
+              "queryRef": "_measures.Total Patient",
+              "nativeQueryRef": "Total Patient"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_measures"
+                  }
+                },
+                "Property": "Total Patient"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Top 10 Patient by diagnosis'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "2233ddc8de0859d80a89",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "disease_summary"
+              }
+            },
+            "Property": "diagnosis"
+          }
+        },
+        "type": "TopN",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "subquery",
+              "Expression": {
+                "Subquery": {
+                  "Query": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "d",
+                        "Entity": "disease_summary",
+                        "Type": 0
+                      },
+                      {
+                        "Name": "_",
+                        "Entity": "_measures",
+                        "Type": 0
+                      }
+                    ],
+                    "Select": [
+                      {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "d"
+                            }
+                          },
+                          "Property": "diagnosis"
+                        },
+                        "Name": "field"
+                      }
+                    ],
+                    "OrderBy": [
+                      {
+                        "Direction": 2,
+                        "Expression": {
+                          "Measure": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "_"
+                              }
+                            },
+                            "Property": "Total Patient"
+                          }
+                        }
+                      }
+                    ],
+                    "Top": 10
+                  }
+                }
+              },
+              "Type": 2
+            },
+            {
+              "Name": "d",
+              "Entity": "disease_summary",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
+                          }
+                        },
+                        "Property": "diagnosis"
+                      }
+                    }
+                  ],
+                  "Table": {
+                    "SourceRef": {
+                      "Source": "subquery"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "f29097bc08060722496b",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "Total Patient"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

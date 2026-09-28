@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "5387b9c84c2130244b97",
+  "position": {
+    "x": 919,
+    "y": 249,
+    "z": 4,
+    "height": 420,
+    "width": 361,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "disease_summary"
+                    }
+                  },
+                  "Property": "severity"
+                }
+              },
+              "queryRef": "disease_summary.severity",
+              "nativeQueryRef": "severity",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "Total Patient"
+                }
+              },
+              "queryRef": "_measures.Total Patient",
+              "nativeQueryRef": "Total Patient"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_measures"
+                  }
+                },
+                "Property": "Total Patient"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

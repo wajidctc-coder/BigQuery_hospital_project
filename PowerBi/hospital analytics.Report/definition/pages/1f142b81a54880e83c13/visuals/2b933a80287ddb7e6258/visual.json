@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "2b933a80287ddb7e6258",
+  "position": {
+    "x": 1107.6923076923076,
+    "y": 16.923076923076923,
+    "z": 7,
+    "height": 63.076923076923073,
+    "width": 172.30769230769229,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "disease_summary"
+                    }
+                  },
+                  "Property": "severity"
+                }
+              },
+              "queryRef": "disease_summary.severity",
+              "nativeQueryRef": "severity",
+              "active": true
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

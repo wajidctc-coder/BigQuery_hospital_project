@@ -1,0 +1,75 @@
+table disease_summary
+	lineageTag: e1d6f6ab-2ea5-4805-8533-fd2f53ebdf8a
+
+	column diagnosis
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: ad2c971c-ce38-4a95-8e17-257225f80a2a
+		summarizeBy: none
+		sourceColumn: diagnosis
+
+		annotation SummarizationSetBy = Automatic
+
+	column severity
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: fad88c6a-82c9-4f51-843e-7cd85cba6801
+		summarizeBy: none
+		sourceColumn: severity
+
+		annotation SummarizationSetBy = Automatic
+
+	column dept
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 92820332-6859-445d-b2ac-4b405145c306
+		summarizeBy: none
+		sourceColumn: dept
+
+		annotation SummarizationSetBy = Automatic
+
+	column patient_count
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: eb5864dc-0ee8-412d-ab28-28541ca33331
+		summarizeBy: sum
+		sourceColumn: patient_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_age
+		dataType: double
+		sourceProviderType: double
+		lineageTag: e96567fe-9ce3-41b4-97c9-995294556188
+		summarizeBy: sum
+		sourceColumn: avg_age
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_los
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 553b750d-424b-494e-9463-ae759682db6c
+		summarizeBy: sum
+		sourceColumn: avg_los
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition disease_summary = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"dbt-learn-509209_Database" = Source{[Name="dbt-learn-509209",Kind="Database"]}[Data],
+				    hospital_gold_Schema = #"dbt-learn-509209_Database"{[Name="hospital_gold",Kind="Schema"]}[Data],
+				    disease_summary_Table = hospital_gold_Schema{[Name="disease_summary",Kind="Table"]}[Data]
+				in
+				    disease_summary_Table
+
+	annotation PBI_ResultType = Table
+

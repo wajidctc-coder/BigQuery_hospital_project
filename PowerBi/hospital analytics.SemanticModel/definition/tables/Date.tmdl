@@ -1,0 +1,111 @@
+table Date
+	lineageTag: add8ee59-0ac9-49c9-b60a-83feadb2d0fe
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: c42a6cc4-2985-43e1-b404-bbcf73cf16e8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation __PBI_SemanticLinks = [{"LinkTarget":{"TableName":"Date","TableItemName":"Date (bins)","ObjectType":4},"LinkType":"UsedInGroup"}]
+
+	column Year
+		formatString: 0
+		lineageTag: f8ebd46e-e17d-4251-ad57-3fa60037a466
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Number'
+		formatString: 0
+		lineageTag: a08e3a0b-936a-4a38-ab93-d0653b952b3f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Month Number]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Month Name'
+		lineageTag: 2c65de3f-f93b-43b8-8d48-85f10c6df3a6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Month Name]
+
+		annotation SummarizationSetBy = Automatic
+
+	column FY
+		formatString: 0
+		lineageTag: 75e58dd4-3383-4e5e-9c3c-335c4b75230a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [FY]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date (bins)' =
+			IF(
+				ISBLANK('Date'[Date]),
+				BLANK(),
+				DATE(
+					YEAR('Date'[Date]),
+					1 + (MONTH('Date'[Date]) - 1),
+					1
+				)
+			)
+		formatString: mmmm\, yyyy
+		lineageTag: e48ab0a6-adbb-496a-9d6d-79cb62ff9c35
+		summarizeBy: none
+
+		extendedProperty GroupingMetadata =
+				{
+				  "version": 0,
+				  "groupedColumns": [
+				    {
+				      "Column": {
+				        "Expression": {
+				          "SourceRef": {
+				            "Entity": "Date"
+				          }
+				        },
+				        "Property": "Date"
+				      }
+				    }
+				  ],
+				  "binningMetadata": {
+				    "binSize": {
+				      "value": 1.0,
+				      "unit": 6
+				    }
+				  }
+				}
+
+		annotation GroupingDesignState = {"Version":0,"Sources":[{"Name":"d","Entity":"Date"}],"GroupedColumns":[{"Column":{"Expression":{"SourceRef":{"Source":"d"}},"Property":"Date"}}],"BinItem":{"Expression":{"Floor":{"Expression":{"Column":{"Expression":{"SourceRef":{"Source":"d"}},"Property":"Date"}},"Size":1.0,"TimeUnit":2}}}}
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	partition Date = calculated
+		mode: import
+		source =
+				
+				VAR MinDate = DATE(2023, 1, 1)
+				VAR MaxDate = DATE(2025, 12, 31)
+				RETURN
+				ADDCOLUMNS(
+				    CALENDAR(MinDate, MaxDate),
+				    "Year", YEAR([Date]),
+				    "Month Number", MONTH([Date]),
+				    "Month Name", FORMAT([Date], "MMM"),
+				    "FY", YEAR([Date]) + IF(MONTH([Date]) >= 4, 1, 0)
+				)
+
+	annotation PBI_Id = b80d8194cb434adeab55d88d9012a13c
+

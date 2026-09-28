@@ -1,0 +1,4 @@
+relationship f206c382-182e-bad4-86fa-48486b1b0b7e
+	fromColumn: daily_operations.visit_date
+	toColumn: Date.Date
+

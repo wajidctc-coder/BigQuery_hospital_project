@@ -1,0 +1,77 @@
+table seasonal_load
+	lineageTag: 03f151b7-6529-4591-bea3-34c0c96c614f
+
+	column season
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: e931b486-076d-44c8-bbe7-1c04d647a073
+		summarizeBy: none
+		sourceColumn: season
+
+		annotation SummarizationSetBy = Automatic
+
+	column dept
+		dataType: string
+		sourceProviderType: nvarchar(16384)
+		lineageTag: 3580b91c-2a9d-4542-a16e-5abe01842343
+		summarizeBy: none
+		sourceColumn: dept
+
+		annotation SummarizationSetBy = Automatic
+
+	column visits
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 9c3cd870-8331-4959-9a5c-015377cab81e
+		summarizeBy: sum
+		sourceColumn: visits
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_beds_used
+		dataType: double
+		sourceProviderType: double
+		lineageTag: a0eeef1f-8586-40ba-8dac-1c87298e5242
+		summarizeBy: sum
+		sourceColumn: avg_beds_used
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_icu_used
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 627bc506-8e38-40c2-9a62-ad984628c077
+		summarizeBy: sum
+		sourceColumn: avg_icu_used
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column avg_oxygen
+		dataType: double
+		sourceProviderType: double
+		lineageTag: afe0e593-d59e-4724-9bcb-ee0e67123b76
+		summarizeBy: sum
+		sourceColumn: avg_oxygen
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition seasonal_load = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"dbt-learn-509209_Database" = Source{[Name="dbt-learn-509209",Kind="Database"]}[Data],
+				    hospital_gold_Schema = #"dbt-learn-509209_Database"{[Name="hospital_gold",Kind="Schema"]}[Data],
+				    seasonal_load_Table = hospital_gold_Schema{[Name="seasonal_load",Kind="Table"]}[Data]
+				in
+				    seasonal_load_Table
+
+	annotation PBI_ResultType = Table
+

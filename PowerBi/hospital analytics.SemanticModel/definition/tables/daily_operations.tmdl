@@ -1,0 +1,93 @@
+table daily_operations
+	lineageTag: d0cabbfa-dab3-4fb2-8094-5ac5a48c9c33
+
+	column visit_date
+		dataType: dateTime
+		formatString: Long Date
+		sourceProviderType: date
+		lineageTag: 4c265c7a-e8c7-49c2-bcd4-4b1d3744ef36
+		summarizeBy: none
+		sourceColumn: visit_date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column total_visits
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: b39c0efa-3622-4960-a452-0fe40302638e
+		summarizeBy: sum
+		sourceColumn: total_visits
+
+		annotation SummarizationSetBy = Automatic
+
+	column beds_used
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: bc274ef8-97b7-4fd6-bd9a-9f9b3fb1396b
+		summarizeBy: sum
+		sourceColumn: beds_used
+
+		annotation SummarizationSetBy = Automatic
+
+	column icu_used
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: d1bf051d-c030-4fcd-b70e-beab9071806c
+		summarizeBy: sum
+		sourceColumn: icu_used
+
+		annotation SummarizationSetBy = Automatic
+
+	column oxygen_used
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: b39e2218-9b33-4dc2-9dda-79266a6e32a9
+		summarizeBy: sum
+		sourceColumn: oxygen_used
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_los
+		dataType: double
+		sourceProviderType: double
+		lineageTag: 6855ec64-f871-4ff6-873f-d6c6b8c34084
+		summarizeBy: sum
+		sourceColumn: avg_los
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column readmissions
+		dataType: int64
+		formatString: 0
+		sourceProviderType: bigint
+		lineageTag: 4e0c819d-7cc9-4e1c-99b5-07fe9236861d
+		summarizeBy: sum
+		sourceColumn: readmissions
+
+		annotation SummarizationSetBy = Automatic
+
+	partition daily_operations = m
+		mode: import
+		source =
+				let
+				    Source = GoogleBigQuery.Database([Implementation="2.0"]),
+				    #"dbt-learn-509209_Database" = Source{[Name="dbt-learn-509209",Kind="Database"]}[Data],
+				    hospital_gold_Schema = #"dbt-learn-509209_Database"{[Name="hospital_gold",Kind="Schema"]}[Data],
+				    daily_operations_Table = hospital_gold_Schema{[Name="daily_operations",Kind="Table"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(daily_operations_Table, each true),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each ([visit_date] <> null))
+				in
+				    #"Filtered Rows1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

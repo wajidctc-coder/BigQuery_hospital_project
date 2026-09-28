@@ -1,0 +1,243 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "e9ba70b678c1993b0459",
+  "position": {
+    "x": 570.76923076923072,
+    "y": 247.69230769230768,
+    "z": 2001,
+    "height": 266.15384615384613,
+    "width": 483.07692307692304,
+    "tabOrder": 2001
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "seasonal_load"
+                    }
+                  },
+                  "Property": "season"
+                }
+              },
+              "queryRef": "seasonal_load.season",
+              "nativeQueryRef": "season",
+              "active": true
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "seasonal_load"
+                    }
+                  },
+                  "Property": "dept"
+                }
+              },
+              "queryRef": "seasonal_load.dept",
+              "nativeQueryRef": "dept",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "seasonal visits"
+                }
+              },
+              "queryRef": "_measures.seasonal visits",
+              "nativeQueryRef": "seasonal visits"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "FillRule": {
+                      "Input": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "_measures"
+                            }
+                          },
+                          "Property": "seasonal visits"
+                        }
+                      },
+                      "FillRule": {
+                        "linearGradient2": {
+                          "min": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#D3FBC0'"
+                              }
+                            }
+                          },
+                          "max": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#D64550'"
+                              }
+                            }
+                          },
+                          "nullColoringStrategy": {
+                            "strategy": {
+                              "Literal": {
+                                "Value": "'asZero'"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "_measures.seasonal visits"
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "dad04dbc66c159ecc241",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "seasonal_load"
+              }
+            },
+            "Property": "dept"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "s",
+              "Entity": "seasonal_load",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "s"
+                              }
+                            },
+                            "Property": "dept"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "10b493e68310a8b6d63b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "seasonal_load"
+              }
+            },
+            "Property": "season"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "2aaef1a07602ec5cd525",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_measures"
+              }
+            },
+            "Property": "seasonal visits"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "aaa331ca4064280a73cb",
+  "position": {
+    "x": 10.769230769230768,
+    "y": 80,
+    "z": 1,
+    "height": 150.76923076923077,
+    "width": 1258.4615384615383,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "Total Visits"
+                }
+              },
+              "queryRef": "_measures.Total Visits",
+              "nativeQueryRef": "Total Visits"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "Readmission %"
+                }
+              },
+              "queryRef": "_measures.Readmission %",
+              "nativeQueryRef": "Readmission %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "Avg Length of stay"
+                }
+              },
+              "queryRef": "_measures.Avg Length of stay",
+              "nativeQueryRef": "Avg Length of stay"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_measures"
+                    }
+                  },
+                  "Property": "Total Oxygen used"
+                }
+              },
+              "queryRef": "_measures.Total Oxygen used",
+              "nativeQueryRef": "Total Oxygen used"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_measures"
+                  }
+                },
+                "Property": "Total Visits"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
